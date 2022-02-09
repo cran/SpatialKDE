@@ -12,20 +12,20 @@
 #'
 #'
 #' @param points \code{\link[sf]{sf}} \code{data.frame} containing only POINTS.
-#' @param band_width \code{numeric} specifing the band width for KDE.
-#' @param decay \code{numeric} specifing the decay parameter for \code{"triangular"} kernel. For
+#' @param band_width \code{numeric} specifying the band width for KDE.
+#' @param decay \code{numeric} specifying the decay parameter for \code{"triangular"} kernel. For
 #' other kernels besides \code{"triangular"} the parameter is not used.
-#' @param kernel \code{character} specifing type of kernel to use. Available implemented kernels are
+#' @param kernel \code{character} specifying type of kernel to use. Available implemented kernels are
 #' \code{"uniform", "quartic", "triweight", "epanechnikov", "triangular"}. Default is \code{"quartic"} and if
-#' uknown kernel name is used it falls back to the default value.
-#' @param scaled \code{logical} specifing if the output values should be scaled. Default value is
+#' unknown kernel name is used it falls back to the default value.
+#' @param scaled \code{logical} specifying if the output values should be scaled. Default value is
 #' \code{FALSE}.
 #' @param weights \code{numeric} vector of weights for individual \code{points}.
 #' @param grid  either \code{\link[sf]{sf}} \code{data.frame} (outcome of function
 #' \code{\link{create_grid_rectangular}} or \code{\link{create_grid_hexagonal}}) or
 #' \code{\link[raster]{Raster-class}} (outcome of function \code{\link{create_raster}}).
 #' Does not have to be specified if \code{cell_size} is set.
-#' @param cell_size \code{numeric} specifing the distance for equal spaced points. Must be
+#' @param cell_size \code{numeric} specifying the distance for equal spaced points. Must be
 #' higher than 0. Can be left out if \code{grid} is provided as \code{grid} is used instead.
 #' The code used to generate grid is \code{\link{create_grid_rectangular}(points, cell_size, band_width)}.
 #'
@@ -80,7 +80,7 @@ kde <- function(points,
   if (!is_double(weights, n = nrow(points), finite = TRUE)) {
     stop(glue::glue("All values of `weights` must be numerical and finite vector (no `NA`s, `Inf` or `-Inf`).",
                     "The length of the vector must be equal to number of rows in `points`.",
-                    "Length weights is `{length(weights)}` and number of rows in poitns is `{nrow(points)}`."))
+                    "Length weights is `{length(weights)}` and number of rows in points is `{nrow(points)}`."))
   }
 
   if (missing(grid) & missing(cell_size)) {
@@ -121,8 +121,9 @@ kde <- function(points,
   UseMethod(".kde")
 }
 
-#' @importFrom sf st_centroid st_coordinates
+#' @importFrom sf st_centroid st_coordinates st_crs st_transform
 #' @importFrom dplyr mutate
+#' @importFrom glue glue
 .kde.sf <- function(grid,
                     points,
                     band_width,
@@ -142,11 +143,23 @@ kde <- function(points,
   if (all(unique(st_geometry_type(grid)) == "POINT")) {
     grid_points <- grid
   } else {
-    message("Using centroids instead of provided `grid` geometries to calculate KDE estimates.")
+
+    if(check_message_print()){
+      message("Using centroids instead of provided `grid` geometries to calculate KDE estimates.")
+    }
+
     suppressWarnings(
       grid_points <- grid %>%
         sf::st_centroid(of_largest_polygon = TRUE)
     )
+  }
+
+  if (sf::st_crs(points) != sf::st_crs(grid_points)) {
+    message(glue::glue("`points` are transformed into `grid` CRS to make coordinates match. ",
+                       "You may want to do this manually using `st_transform()` function to ",
+                       "have better control over the process."))
+    points <- points %>%
+      sf::st_transform(crs = st_crs(grid_points))
   }
 
   kde_values <- kde_estimate(sf::st_coordinates(grid_points),
