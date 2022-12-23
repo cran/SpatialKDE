@@ -1,4 +1,4 @@
-df1df3315d4bb2679fb72b4630d9bee1 *DESCRIPTION
+18a53fb25e1d5d3ac52d351487b18b7a *DESCRIPTION
 43bebc0ba5d3ce21446c287fe0bf9891 *LICENSE
 93918ad1d0d1be03384f0d0c16a66174 *NAMESPACE
 3d314c051f789e3bc7a4cc35780cc5b8 *NEWS.md
@@ -11,10 +11,10 @@ fb858d12d61430b36ef822cafc5bfbef *R/kde.R
 4c65262646b0ff57c51efecfe5d86b44 *R/utils.R
 8782a8b9b0d2d1b942f4647557fb3391 *R/zzz.R
 6ac0bbb316720e456b62b06dbca037c2 *README.md
-fee6731453d10a44995b73130463fa69 *build/vignette.rds
+c2106bae4f7417231cab5c432a3d44ae *build/vignette.rds
 11c3ec17e94f3a569f5d9cfe8fad48fa *inst/doc/SpatialKDE.R
 ad1596fae14a870e65de77e3ef8baa75 *inst/doc/SpatialKDE.Rmd
-e78a3b785a50140aeb7b0b647dd356ac *inst/doc/SpatialKDE.html
+ed6e050d844d4335b6adaf1b07001fed *inst/doc/SpatialKDE.html
 964327d275ea4d6a83e0ce4b07fb9e86 *man/create_grid.Rd
 5803bfc99f827776cabbc69a9706544e *man/create_raster.Rd
 02bd2585ca1df30abd03de78d056b9e5 *man/kde.Rd
