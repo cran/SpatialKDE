@@ -1,7 +1,7 @@
 Package: SpatialKDE
 Type: Package
 Title: Kernel Density Estimation for Spatial Data
-Version: 0.8.1
+Version: 0.8.2
 URL: https://jancaha.github.io/SpatialKDE/index.html,
         https://github.com/JanCaha/SpatialKDE
 Authors@R: 
@@ -20,13 +20,12 @@ Encoding: UTF-8
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 LinkingTo: cpp11, progress
-SystemRequirements: C++11
 Imports: sf, dplyr, glue, magrittr, rlang, vctrs, methods, raster
 Suggests: tmap, sp, knitr, rmarkdown, testthat (>= 2.99.0), xml2
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2022-12-23 10:45:10 UTC; cahik
+Packaged: 2023-02-18 14:21:48 UTC; cahik
 Author: Jan Caha [aut, cre] (<https://orcid.org/0000-0003-0165-0606>)
 Maintainer: Jan Caha <jan.caha@outlook.com>
 Repository: CRAN
-Date/Publication: 2022-12-23 11:20:05 UTC
+Date/Publication: 2023-02-18 15:10:02 UTC
